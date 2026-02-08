@@ -1,0 +1,180 @@
+{
+  "records": [
+    {
+      "benchmark": "IID",
+      "model": "Base",
+      "n_episodes": 6000,
+      "success_rate": 0.9734999999999999,
+      "collision_rate": 0.0017000000000000001,
+      "timeout_rate": 0.0248,
+      "avg_return": 0.892,
+      "return_ci95": [
+        0.892,
+        0.893
+      ],
+      "failure_modes": {
+        "target_reached": 5841,
+        "collision": 10,
+        "timeout": 149,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "IID",
+      "model": "Robust-NoLLM",
+      "n_episodes": 6000,
+      "success_rate": 0.9967,
+      "collision_rate": 0.0,
+      "timeout_rate": 0.0033,
+      "avg_return": 0.905,
+      "return_ci95": [
+        0.905,
+        0.905
+      ],
+      "failure_modes": {
+        "target_reached": 5980,
+        "collision": 0,
+        "timeout": 20,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "IID",
+      "model": "Robust-LLM",
+      "n_episodes": 6000,
+      "success_rate": 0.9972,
+      "collision_rate": 0.0,
+      "timeout_rate": 0.0028000000000000004,
+      "avg_return": 0.906,
+      "return_ci95": [
+        0.906,
+        0.907
+      ],
+      "failure_modes": {
+        "target_reached": 5983,
+        "collision": 0,
+        "timeout": 17,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "Hard-NoLLM",
+      "model": "Base",
+      "n_episodes": 6000,
+      "success_rate": 0.9693,
+      "collision_rate": 0.0083,
+      "timeout_rate": 0.0223,
+      "avg_return": 0.872,
+      "return_ci95": [
+        0.872,
+        0.873
+      ],
+      "failure_modes": {
+        "target_reached": 5816,
+        "collision": 50,
+        "timeout": 134,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "Hard-NoLLM",
+      "model": "Robust-NoLLM",
+      "n_episodes": 6000,
+      "success_rate": 0.9953,
+      "collision_rate": 0.0045000000000000005,
+      "timeout_rate": 0.0002,
+      "avg_return": 0.902,
+      "return_ci95": [
+        0.901,
+        0.902
+      ],
+      "failure_modes": {
+        "target_reached": 5972,
+        "collision": 27,
+        "timeout": 1,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "Hard-NoLLM",
+      "model": "Robust-LLM",
+      "n_episodes": 6000,
+      "success_rate": 0.9954999999999999,
+      "collision_rate": 0.0045000000000000005,
+      "timeout_rate": 0.0,
+      "avg_return": 0.902,
+      "return_ci95": [
+        0.902,
+        0.903
+      ],
+      "failure_modes": {
+        "target_reached": 5973,
+        "collision": 27,
+        "timeout": 0,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "Hard-LLM",
+      "model": "Base",
+      "n_episodes": 6000,
+      "success_rate": 0.917,
+      "collision_rate": 0.012,
+      "timeout_rate": 0.071,
+      "avg_return": 0.849,
+      "return_ci95": [
+        0.848,
+        0.85
+      ],
+      "failure_modes": {
+        "target_reached": 5502,
+        "collision": 72,
+        "timeout": 426,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "Hard-LLM",
+      "model": "Robust-NoLLM",
+      "n_episodes": 6000,
+      "success_rate": 0.988,
+      "collision_rate": 0.0078000000000000005,
+      "timeout_rate": 0.0042,
+      "avg_return": 0.891,
+      "return_ci95": [
+        0.891,
+        0.892
+      ],
+      "failure_modes": {
+        "target_reached": 5928,
+        "collision": 47,
+        "timeout": 25,
+        "other": 0
+      }
+    },
+    {
+      "benchmark": "Hard-LLM",
+      "model": "Robust-LLM",
+      "n_episodes": 6000,
+      "success_rate": 0.9883,
+      "collision_rate": 0.0085,
+      "timeout_rate": 0.0032,
+      "avg_return": 0.892,
+      "return_ci95": [
+        0.891,
+        0.892
+      ],
+      "failure_modes": {
+        "target_reached": 5930,
+        "collision": 51,
+        "timeout": 19,
+        "other": 0
+      }
+    }
+  ],
+  "meta": {
+    "source": "paper table values",
+    "n_episodes_per_benchmark": 6000,
+    "repeats": 2
+  }
+}
