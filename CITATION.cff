@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated paper."
+title: "LLM-Guided Pareto Scenario Discovery for Robust Map-Free LiDAR Navigation"
+type: software
+authors:
+  - family-names: "Yilmaz"
+    given-names: "Taner"
+  - family-names: "Aydogmus"
+    given-names: "Omur"
+version: "0.1.0"
+date-released: "2026-02-08"
+license: MIT
+repository-code: "https://github.com/<your-org>/<your-repo>"
