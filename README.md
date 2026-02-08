@@ -1,98 +1,112 @@
-# LLM-Guided Pareto Scenario Discovery for Robust Map-Free LiDAR Navigation (Reproducibility Repo)
+LLM-Guided Pareto Scenario Discovery for Robust Map-Free LiDAR Navigation (Reproducibility Repo)
 
-Bu repo, makaledeki **Hard-NoLLM / Hard-LLM benchmark** üretimi, **hard-bank** derleme,
-**robust fine-tuning** ve **figür/tablo üretimi** adımlarını yeniden üretilebilir biçimde
-paketlemek için hazırlanmış bir iskelettir.
+This repository is a scaffold prepared to package the paper’s Hard-NoLLM / Hard-LLM benchmark generation, hard-bank assembly, robust fine-tuning, and figure/table generation steps in a reproducible manner.
 
-> Not: LLM bileşeni yalnızca *keşif* sırasında kullanılır. LLM anahtarınız yoksa bile,
-> repo içindeki **ön-hesaplanmış artefaktlar** (audit log / manifest / özet sonuçlar)
-> üzerinden ana tablo/figürleri yeniden üretebilirsiniz.
+Note: The LLM component is used only during discovery. Even without an LLM API key,
+you can reproduce the main tables/figures using the precomputed artifacts
+(audit logs / manifests / summary results) included in the repo.
 
----
-
-## 1) Hızlı başlangıç (yalnızca figür/tablo üretimi)
-
-```bash
+1) Quick start (figures/tables only)
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-```
 
-**Makaledeki figürleri yeniden üret:**
-```bash
+
+Reproduce the paper figures:
+
 python tools/make_figs_robust_results.py --help
-```
 
-Örnek (1000 dpi):
-```bash
+
+Example (1000 dpi):
+
 python tools/make_figs_robust_results.py   --eval_dir artifacts/eval_summaries   --out_dir outputs/figs   --dpi 1000
-```
 
-> `artifacts/eval_summaries/` klasöründe, makaledeki raporlamayı besleyen örnek/çıktı JSON'ları tutulur.
 
----
+The folder artifacts/eval_summaries/ contains the example/output JSON files that feed the paper’s reporting pipeline.
 
-## 2) Yeniden üretilebilirlik seviyeleri
+2) Reproducibility levels
 
-**Seviye A — “Paper artefact replay” (önerilen):**
-- `artifacts/` altındaki JSON/JSONL özetlerinden **tablolar ve figürler** üretilir.
-- LLM anahtarı / uzun eğitim gerekmez.
+Level A — “Paper artifact replay” (recommended):
 
-**Seviye B — “Evaluation replay”:**
-- Paylaşılan senaryo paketleri + (paylaşılan) modeller ile benchmark tekrar çalıştırılır.
-- CPU ile çalışır; daha uzun sürer.
+Generate tables and figures from JSON/JSONL summaries under artifacts/.
 
-**Seviye C — “Full pipeline”:**
-- Taban PPO eğitimi + keşif (NoLLM/LLM) + hard-bank + robust fine-tuning + evaluation.
-- LLM modunu çalıştırmak için API anahtarı gerekir.
+No LLM key or long training runs required.
 
----
+Level B — “Evaluation replay”:
 
-## 3) Repo yapısı (önerilen)
+Re-run the benchmarks using the shared scenario packs + (shared) models.
 
-- `src/eswa_nav/` : ortam / yardımcı modüller (paket biçimi)
-- `tools/`        : çalıştırılabilir betikler (evaluation, finetune, figür üretimi)
-- `artifacts/`    : yeniden üretilebilirlik için küçük/orta boy artefaktlar
-- `supplementary/`: gerçek-dünya overlay’leri ve ek görseller
-- `docs/`         : şema ve çalışma notları
-- `paper/`        : (opsiyonel) LaTeX kaynakları
+Runs on CPU; takes longer.
 
----
+Level C — “Full pipeline”:
 
-## 4) GitHub’a koymanız gereken “asgari” dosyalar (checklist)
+Base PPO training + discovery (NoLLM/LLM) + hard-bank + robust fine-tuning + evaluation.
 
-### A) Kod (zorunlu)
-- **Senaryo DSL + üretim/doğrulama:** `scenario_dsl.py`, senaryo JSON şemaları
-- **Simülasyon ortamı:** `ilkkisim.py` (CustomEnv) ve bağımlı yardımcılar
-- **Keşif döngüsü (NoLLM + LLM):** discovery scriptleri, coverage tracker, Pareto/elite seçimi
-- **Hard-bank derleme + split:** `make_hardbank_manifest.py`, `robust_manifest.json` üretimi
-- **Robust fine-tuning:** `run_robust_finetuning.py`
-- **Benchmark değerlendirme:** `evaluate_*` betikleri, `run_eval_manifest.py`
-- **Analiz + figür üretimi:** `make_figs_*.py`, tablo üretimi ve CI hesapları
+An API key is required to run the LLM mode.
 
-### B) Konfigürasyon (zorunlu)
-- `requirements.txt` / `environment.yml`
-- `run_config.json` (eğitim/eval parametreleri)
-- `split_salt` ve seed listesi (42–51)
-- CLI komutları (`scripts/*.sh`) veya Makefile
+3) Repository structure (recommended)
 
-### C) Artefaktlar (en azından “paper replay” için)
-- `robust_manifest.json` (dosya listeleri + split)
-- LLM audit izleri: `llm_audit_log.jsonl` (tamamı büyükse örnek + checksum)
-- Benchmark/eval özetleri: `*_ep3000.json` gibi dosyalar
-- (opsiyonel) Pareto arşivleri, coverage snapshot’ları
+src/eswa_nav/ : environment / helper modules (as a Python package)
 
-### D) Modeller
-- En azından **Base-100k**: `ppo_static_shaping_model.zip`, `ppo_static_shaping_vecnorm.pkl`
-- Robust modeller çok büyükse GitHub Releases / Zenodo üzerinden sunulabilir.
+tools/ : runnable scripts (evaluation, fine-tuning, figure generation)
 
----
+artifacts/ : small/medium artifacts for reproducibility
 
-## 5) Lisans & Atıf
-- Kod için `LICENSE`
-- Atıf için `CITATION.cff`
+supplementary/: real-world overlays and additional visuals
 
----
+docs/ : schemas and working notes
 
-## İletişim
-Sorun/eksik için “Issues” açabilirsiniz.
+paper/ : (optional) LaTeX sources
+
+4) Minimal files to include on GitHub (checklist)
+A) Code (required)
+
+Scenario DSL + generation/validation: scenario_dsl.py, scenario JSON schemas
+
+Simulation environment: ilkkisim.py (CustomEnv) and dependent helpers
+
+Discovery loop (NoLLM + LLM): discovery scripts, coverage tracker, Pareto/elite selection
+
+Hard-bank assembly + split: make_hardbank_manifest.py, generation of robust_manifest.json
+
+Robust fine-tuning: run_robust_finetuning.py
+
+Benchmark evaluation: evaluate_* scripts, run_eval_manifest.py
+
+Analysis + figure generation: make_figs_*.py, table generation and CI computation
+
+B) Configuration (required)
+
+requirements.txt / environment.yml
+
+run_config.json (training/evaluation parameters)
+
+split_salt and seed list (42–51)
+
+CLI commands (scripts/*.sh) or a Makefile
+
+C) Artifacts (at least for “paper replay”)
+
+robust_manifest.json (file lists + splits)
+
+LLM audit traces: llm_audit_log.jsonl (if too large: sample + checksum)
+
+Benchmark/eval summaries: files like *_ep3000.json
+
+(optional) Pareto archives, coverage snapshots
+
+D) Models
+
+At minimum Base-100k: ppo_static_shaping_model.zip, ppo_static_shaping_vecnorm.pkl
+
+If robust models are too large, host them via GitHub Releases / Zenodo.
+
+5) License & Citation
+
+LICENSE for code
+
+CITATION.cff for citation instructions
+
+Contact
+
+If you encounter issues or missing components, please open an “Issue”.
